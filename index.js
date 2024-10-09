@@ -187,7 +187,6 @@ app.listen(port, () => {
 
 // 向外暴露out文件夹
 app.use('/out', express.static('./out'));
-app.use('/test', express.static('./test'));
 
 // 跨域
 app.use((req, res, next) => {
