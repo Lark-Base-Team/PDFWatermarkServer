@@ -67,8 +67,8 @@ app.get('/addWatermark', async ({ query }, res) => {
         const rotatedHeight = height * Math.cos(rotate * Math.PI / 180) + width * Math.sin(rotate * Math.PI / 180)
         ctx.fillStyle = `rgba(88,88,88,${opacity})`
         ctx.font = size2 + 'px MiSans'
-        for (let y = -Math.sin(rotate * Math.PI / 180) * width; y < rotatedHeight; y += gapY + fontSize) {
-          for (let x = (y / rotatedHeight) * ctx.measureText(coverText).width; x < rotatedWidth; x += gapX + ctx.measureText(coverText).width) {
+        for (let y = -Math.sin(rotate * Math.PI / 180) * width; y < rotatedHeight; y += (gapY + fontSize) * 2) {
+          for (let x = (y / rotatedHeight) * ctx.measureText(coverText).width; x < rotatedWidth; x += (gapX + ctx.measureText(coverText).width) * 2) {
             ctx.fillText(coverText, x, y)
           }
         }
