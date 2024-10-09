@@ -53,12 +53,12 @@ app.get('/addWatermark', async ({ query }, res) => {
       ctx.fillStyle = '#ffffff'
       ctx.textBaseline = 'top'
       const margin = vmin * 0.015
-
+      
       if (direction == 'cover') {
         // 背景覆盖
         const rotate = 30
-        const gapX = size2
-        const gapY = size1
+        const gapX = size1
+        const gapY = size0 * 2
         const fontSize = size2
         const coverText = text + ' ' + (showDate ? date + ' ' + clock : '')
         ctx.save()
@@ -67,8 +67,8 @@ app.get('/addWatermark', async ({ query }, res) => {
         const rotatedHeight = height * Math.cos(rotate * Math.PI / 180) + width * Math.sin(rotate * Math.PI / 180)
         ctx.fillStyle = `rgba(88,88,88,${opacity})`
         ctx.font = size2 + 'px MiSans'
-        for (let y = -Math.sin(rotate * Math.PI / 180) * width; y < rotatedHeight; y += (gapY + fontSize) * 2) {
-          for (let x = (y / rotatedHeight) * ctx.measureText(coverText).width; x < rotatedWidth; x += (gapX + ctx.measureText(coverText).width) * 2) {
+        for (let y = -Math.sin(rotate * Math.PI / 180) * width; y < rotatedHeight; y += gapY + fontSize) {
+          for (let x = (y / rotatedHeight) * ctx.measureText(coverText).width; x < rotatedWidth; x += gapX + ctx.measureText(coverText).width) {
             ctx.fillText(coverText, x, y)
           }
         }
@@ -187,6 +187,7 @@ app.listen(port, () => {
 
 // 向外暴露out文件夹
 app.use('/out', express.static('./out'));
+app.use('/test', express.static('./test'));
 
 // 跨域
 app.use((req, res, next) => {
