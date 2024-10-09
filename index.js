@@ -60,7 +60,7 @@ app.get('/addWatermark', async ({ query }, res) => {
         const gapX = size2
         const gapY = size1
         const fontSize = size2
-        const coverText = text + ' ' + (showDate ? date : '')
+        const coverText = text + ' ' + (showDate ? date + ' ' + clock : '')
         ctx.save()
         ctx.rotate(rotate * Math.PI / 180)
         const rotatedWidth = width * Math.cos(rotate * Math.PI / 180) + height * Math.sin(rotate * Math.PI / 180)
@@ -187,7 +187,6 @@ app.listen(port, () => {
 
 // 向外暴露out文件夹
 app.use('/out', express.static('./out'));
-app.use('/test', express.static('./test'));
 
 // 跨域
 app.use((req, res, next) => {
